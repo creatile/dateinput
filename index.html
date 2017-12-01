@@ -36,7 +36,7 @@
         </div>
         <div class="small-12">
           <label>TEXT WITH TIME PICKER</label>
-          <input id="timepicker" class="timepicker" type="text" name="pickatime">
+          <input id="timepicker" class="timepicker hasWickedpicker" type="text" step="900" name="pickatime">
         </div>
         <div class="small-12">
           <label>DATE HTML5</label>
@@ -57,93 +57,71 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script> 
     <script src="js/moment.min.js"></script>
-    <script src="js/wickedpicker.min.js"></script>
+    <script src="js/wickedpicker.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js" ></script>
+    <script src="js/jquery.pikaday.js"></script>
     <script>
       $(document).foundation();
 
-      //var picker = new Pikaday({ field: document.getElementById('datepicker') });
-      var picker = new Pikaday({
-        field: document.getElementById('datepicker'),
-        format: 'D/M/YYYY',
-        toString(date, format) {
-            // you should do formatting based on the passed format,
-            // but we will just return 'D/M/YYYY' for simplicity
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        },
-        parse(dateString, format) {
-            // dateString is the result of `toString` method
-            const parts = dateString.split('/');
-            const day = parseInt(parts[0], 10);
-            const month = parseInt(parts[1] - 1, 10);
-            const year = parseInt(parts[1], 10);
-            return new Date(year, month, day);
-        }
-    });
       var timeoptions = {
         showSeconds: false,
         twentyFour: true,
-        minutesInterval: 15,
+        minutesInterval: 1,
         now: "12:00",
+        timeSeparator: ':',
       }
+      var timeinput = $('#timepicker');
+      var dateinput = $('#datepicker');
+
       if (Foundation.MediaQuery.is('small only')) {
         console.log("small size");
         // False if medium or large
-        $('#timepicker').prop('type', 'time').removeClass('timepicker');
-        $('#datepicker').prop('type', 'date');
-        var wickedpicker = null;
-        picker.destroy();
+        timeinput.prop('type', 'time');
+        dateinput.prop('type', 'date');
       }else{
-        var wickedpicker = $('#timepicker').wickedpicker(timeoptions);
+        //Init Date and time picker if not small
+        timeinput.wickedpicker(timeoptions);
+        var datepicker = dateinput.pikaday({ 
+          firstDay: 1,
+          format: 'DD/MM/YYYY'
+         });
       }
+      //On Resize the window
       $(window).on('changed.zf.mediaquery', function(event, newSize, oldSize) {
         // newSize is the name of the now-current breakpoint, oldSize is the previous breakpoint
         if(newSize === 'small'){
-          console.log("small size");
-          $('#timepicker').prop('type', 'time').removeClass('timepicker');
-          $('#datepicker').prop('type', 'date');
-          if (picker != null){
-          picker.destroy();
-          }
-          var wickedpicker = null;
-     
-        }else if(newSize === 'medium') {
-          console.log("medium size");
-          $('#timepicker').prop('type', 'text').removeClass('timepicker');
-          $('#datepicker').prop('type', 'text');
-          if (picker == null){
-            // your code here.
-            var picker = new Pikaday({
-              field: document.getElementById('datepicker'),
-              format: 'D/M/YYYY',
-              toString(date, format) {
-                  // you should do formatting based on the passed format,
-                  // but we will just return 'D/M/YYYY' for simplicity
-                  const day = date.getDate();
-                  const month = date.getMonth() + 1;
-                  const year = date.getFullYear();
-                  return `${day}/${month}/${year}`;
-              },
-              parse(dateString, format) {
-                  // dateString is the result of `toString` method
-                  const parts = dateString.split('/');
-                  const day = parseInt(parts[0], 10);
-                  const month = parseInt(parts[1] - 1, 10);
-                  const year = parseInt(parts[1], 10);
-                  return new Date(year, month, day);
-              }
-          });
-          };
-          if (wickedpicker == null){
-            var wickedpicker = $('#timepicker').wickedpicker(timeoptions);
-          };
+          //console.log("small size");
+          timeinput.prop('type', 'time').prop('onkeypress', 'return true;');
+          timeinput.attr('onkeypress', 'return true;');
+          timeinput.attr('aria-showingpicker', 'true');
+
+          dateinput.prop('type', 'date');
+          //Hide Date and time
+          $('.pika-single').addClass('hide-for-small-only');
+          $('.wickedpicker').addClass('hide-for-small-only');
+          dateinput.pikaday('destroy');
           
-        };
+        }else if(oldSize === 'small') {
+          //console.log("old small size");
+          var time = timeinput.val();
+          console.log(time);
+          timeinput.prop('type', 'text');
+          timeinput.attr('onkeypress', 'return false;');
+          timeinput.attr('aria-showingpicker', 'false');
+          dateinput.prop('type', 'text');
+
+
+          //INIT date and Time picker
+          var datepicker = dateinput.pikaday({ 
+            firstDay: 1,
+            format: 'DD/MM/YYYY'
+          });
+          timeinput.wickedpicker(timeoptions);
+          $('.pika-single').removeClass('hide-for-small-only');
+          $('.wickedpicker').removeClass('hide-for-small-only');
+          };
       });
-      
+
     </script>
 
   </body>
