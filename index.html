@@ -30,7 +30,7 @@
         </div>
         <div class="small-12">
           <label>TIME WITH TIME PICKER</label>
-          <input class="timepicker" type="time" name="pickatime">
+          <input id="time" class="timepicker" type="text" name="pickatime">
         </div>
         <div class="small-12">
           <label>TEXT WITH TIME PICKER</label>
@@ -42,7 +42,7 @@
         </div>
         <div class="small-12">
           <label>DATE PICKADAY</label>
-          <input id="datepicker" type="date" name="pickadate">
+          <input id="datepicker" type="text" name="pickadate">
         </div>
         <div class="small-12">
           <label>DATE TIME HTML5</label>
@@ -60,6 +60,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js" ></script>
     <script>
       $(document).foundation();
+      if( $('body').foundation('is', small) ){
+      console.log('small size');
+        $("#time").prop('type', 'time');
+        $("#datepicker").prop('type', 'date');
+      };
       var picker = new Pikaday({ field: document.getElementById('datepicker') });
       
       $('.timepicker').wickedpicker('time', 0);
@@ -74,12 +79,7 @@
     console.log('medium size');
   } 
 }); */
-      if( $('body').foundation('is', small) ){
-      console.log('small size');
-      }else if ($('body').foundation('is', medium)){
-      console.log('medium size');
-      }
-      ;
+
     </script>
 
   </body>
