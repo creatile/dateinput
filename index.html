@@ -61,7 +61,7 @@
     <script>
       $(document).foundation();
       
-      if( $('body').foundation('is', small) ){
+      if( $("body").foundation('is', small) ){
       console.log('small size');
         $("#time").prop('type', 'time');
         $("#datepicker").prop('type', 'date');
@@ -69,6 +69,7 @@
         console.log('medium size');
       }else if($('body').foundation('is', large)){
         console.log('large size');
+      }else{
       };
       var picker = new Pikaday({ field: document.getElementById('datepicker') });
       
