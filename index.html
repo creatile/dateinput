@@ -60,10 +60,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.6.1/pikaday.min.js" ></script>
     <script>
       $(document).foundation();
+      
       if( $('body').foundation('is', small) ){
       console.log('small size');
         $("#time").prop('type', 'time');
         $("#datepicker").prop('type', 'date');
+      }else if($('body').foundation('is', medium)){
+        console.log('medium size');
+      }else if($('body').foundation('is', large)){
+        console.log('large size');
       };
       var picker = new Pikaday({ field: document.getElementById('datepicker') });
       
