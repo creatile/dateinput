@@ -34,7 +34,7 @@
         </div>
         <div class="small-12">
           <label>TEXT WITH TIME PICKER</label>
-          <input class="timepicker" type="text" name="pickatime">
+          <input class="timepicker2" type="text" name="pickatime">
         </div>
         <div class="small-12">
           <label>DATE HTML5</label>
@@ -62,7 +62,8 @@
       $(document).foundation();
       var picker = new Pikaday({ field: document.getElementById('datepicker') });
       
-      $('.timepicker').wickedpicker();
+      $('.timepicker').wickedpicker('time', 0);
+      $('.timepicker2').wickedpicker('time', 1);
     </script>
 
   </body>
