@@ -61,28 +61,12 @@
     <script>
       $(document).foundation();
       
-      if( $('body').foundation('is', 'small') ){
-      console.log('small size');
-        $("#time").prop('type', 'time');
-        $("#datepicker").prop('type', 'date');
-      }else{
-        console.log('large size');
-      };
       
       var picker = new Pikaday({ field: document.getElementById('datepicker') });
       
       $('.timepicker').wickedpicker('time', 0);
       $('.timepicker2').wickedpicker('time', 1);
       
-      /*$(window).on('changed.zf.mediaquery', function(evt, newSize, oldSize){
-         Inital state small -> medium 
-    console.log(Foundation.MediaQuery.current);
-  if(newSize === 'small'){
-    console.log('small size');
-  }else if(oldSize === 'small'){
-    console.log('medium size');
-  } 
-}); */
 
 
     </script>
