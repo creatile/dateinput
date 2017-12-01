@@ -66,6 +66,8 @@
       $('.timepicker2').wickedpicker('time', 1);
       
       $(window).on('changed.zf.mediaquery', function(evt, newSize, oldSize){
+        // Inital state small -> medium 
+    console.log(Foundation.MediaQuery.current);
   if(newSize === 'small'){
     console.log('small size');
   }else if(oldSize === 'small'){
