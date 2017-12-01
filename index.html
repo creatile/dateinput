@@ -64,6 +64,14 @@
       
       $('.timepicker').wickedpicker('time', 0);
       $('.timepicker2').wickedpicker('time', 1);
+      
+      $(window).on('changed.zf.mediaquery', function(evt, newSize, oldSize){
+  if(newSize === 'small'){
+    console.log('small size');
+  }else if(oldSize === 'small'){
+    console.log('medium size');
+  } 
+}); 
     </script>
 
   </body>
